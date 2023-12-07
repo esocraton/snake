@@ -1,129 +1,98 @@
 import turtle
-import time
-import random
+import subprocess
 
-"""ekranı ayarlıyoruz"""
-simulakra = turtle.Screen()
-simulakra.title("SNAKE")
-simulakra.setup(width=1500, height=750)
-simulakra.bgcolor("blue")
-simulakra.tracer(0)
+file_name = 'snake_game.py'
 
-"""yılanın başını ayarlıyoruz"""
-head = turtle.Turtle()
-head.speed(0)
-head.color("yellow")
-head.shape("circle")
-head.penup()
-head.goto(0, 0)
-head.direction = 'stop'
-head_speed = 0.05
+o_simulakra = turtle.Screen()
+o_simulakra.title("SNAKE")
+o_simulakra.setup(width=1500, height=750)
+o_simulakra.bgcolor("blue")
+# o_simulakra.tracer(0)
+# tracer() fonksiyonu çalıştığı taktirde selector otomatik biçimde gizleniyor.
 
-"""yem ayarlıyoruz"""
-prey = turtle.Turtle()
-prey.speed(0)
-prey.color('white')
-prey.shape('square')
-prey.penup()
-prey.goto(-300, 0)
-prey.shapesize(0.5, 0.5)
+opening = turtle.Turtle()
+opening.speed(0)
+opening.color('black')
+opening.shape('square')
+opening.penup()
+opening.goto(0, 40)
+opening.hideturtle()
+opening.write('YILAN OYUNU', align='center', font=('Arial', 50, 'bold'))
 
-body = []
-score = 0
+start_button = turtle.Turtle()
+start_button.speed(0)
+start_button.color('black')
+start_button.shape('square')
+start_button.penup()
+start_button.goto(0, -10)
+start_button.hideturtle()
+start_button.write('BAŞLA', align='center', font=('Arial', 25, 'normal'))
 
-score_board = turtle.Turtle()
-score_board.speed(0)
-score_board.color('yellow')
-score_board.shape('square')
-score_board.penup()
-score_board.goto(0, 300)
-score_board.hideturtle()
-score_board.write('SCORE: {}'.format(score), align='center', font=('Courier', 30, 'normal'))
+exit_button = turtle.Turtle()
+exit_button.speed(0)
+exit_button.color('black')
+exit_button.shape('square')
+exit_button.penup()
+exit_button.goto(0, -60)
+exit_button.hideturtle()
+exit_button.write('ÇIKIŞ', align='center', font=('Arial', 25, 'normal'))
 
+selector = turtle.Turtle()
+selector.speed(0)
+selector.color('yellow')
+selector.shape('triangle')
+selector.penup()
+selector.goto(-80, 10)
 
-def move():
-    """oyuncunun hareketlerini ayarlıyoruz"""
-    if head.direction == 'up':
-        y = head.ycor()
-        head.sety(y + 10)
-    if head.direction == 'down':
-        y = head.ycor()
-        head.sety(y - 10)
-    if head.direction == 'left':
-        x = head.xcor()
-        head.setx(x - 10)
-    if head.direction == 'right':
-        x = head.xcor()
-        head.setx(x + 10)
+# Seçim durumunu kontrol et
+selected = 'start'
 
 
-def move_up():
-    """oyuncu yukarı giderken birden aşağı gidemesin"""
-    if head.direction != 'down':
-        head.direction = 'up'
+# Yön tuşlarına basıldığında ne olacağını tanımla
+def go_up():
+    global selected
+    if selected == 'exit':
+        selector.goto(-80, 10)
+        selected = 'start'
 
 
-def move_down():
-    """oyuncu aşağı giderken birden yukarı gidemesin"""
-    if head.direction != 'up':
-        head.direction = 'down'
+def go_down():
+    global selected
+    if selected == 'start':
+        selector.goto(-80, -40)
+        selected = 'exit'
 
 
-def move_left():
-    """oyuncu sola giderken birden sağa gidemesin"""
-    if head.direction != 'right':
-        head.direction = 'left'
+def select():
+    if selected == 'start':
+        print("Start'a tıklandı!")
+        o_simulakra.bye()
+        subprocess.run(['python', file_name])
+    elif selected == 'exit':
+        print("Exit'e tıklandı!")
+        exit()
 
 
-def move_right():
-    """oyuncu sağa giderken birden sola gidemesin"""
-    if head.direction != 'left':
-        head.direction = 'right'
+# Tuş vuruşlarını ekranla ilişkilendir
+o_simulakra.listen()
+o_simulakra.onkey(go_up, 'Up')
+o_simulakra.onkey(go_down, 'Down')
+o_simulakra.onkey(select, 'Return')
 
 
-simulakra.listen()
-simulakra.onkey(move_up, 'Up')
-simulakra.onkey(move_down, 'Down')
-simulakra.onkey(move_right, 'Right')
-simulakra.onkey(move_left, 'Left')
+# Tıklama olaylarını tanımla
+def on_click(x, y):
+    if start_button.distance(x, y) < 50:
+        print("Start'a tıklandı!")
+        o_simulakra.bye()
+        subprocess.run(['python', file_name])
+    elif exit_button.distance(x, y) < 50:
+        print("Exit'e tıklandı!")
+        exit()
 
-while True:
-    simulakra.update()
 
-    if head.xcor() > 750 or head.xcor() < -750 or head.ycor() > 375 or head.ycor() < -375:
-        time.sleep(1)
-        head.goto(0, 0)
-        head.direction = 'stop'
-        score = 0
-        score_board.clear()
-        score_board.write('SCORE: {}'.format(score), align='center', font=('Courier', 30, 'normal'))
+# Tıklama olayını ekranla ilişkilendir
+o_simulakra.onscreenclick(on_click)
 
-    if head.distance(prey) < 20:
-        x = random.randint(-350, 350)
-        y = random.randint(-350, 350)
-        prey.goto(x, y)
-
-        score += 10
-        score_board.clear()
-        score_board.write('SCORE: {}'.format(score), align='center', font=('Courier', 30, 'normal'))
-        head_speed = head_speed - 0.0001
-
-        tail = turtle.Turtle()
-        tail.speed(0)
-        tail.color('yellow')
-        tail.shape('circle')
-        tail.penup()
-        body.append(tail)
-
-    if len(body) > 0:
-        x = head.xcor()
-        y = head.ycor()
-        body[0].goto(x, y)
-
-    for i in range(len(body) - 1, 0, -1):
-        x = body[i-1].xcor()
-        y = body[i-1].ycor()
-        body[i].goto(x, y)
-
-    move()
-    time.sleep(head_speed)
+# Olay döngüsünü başlat
+turtle.done()
