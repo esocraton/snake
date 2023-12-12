@@ -105,12 +105,24 @@ while True:
 
     while True:
         simulakra.update()
-        if head.xcor() > 750 or head.xcor() < -750 or head.ycor() > 375 or head.ycor() < -375:
-            px = head.xcor()
-            nx = -px
-            py = head.ycor()
-            ny = -py
-            head.goto(nx, ny)
+        if head.xcor() > 750:
+            head.goto(-750, head.ycor())
+
+        if head.xcor() < -750:
+            head.goto(750, head.ycor())
+
+        if head.ycor() > 375:
+            head.goto(head.xcor(), -375)
+
+        if head.ycor() < -375:
+            head.goto(head.xcor(), 375)
+
+        # if head.xcor() > 750 or head.xcor() < -750 or head.ycor() > 375 or head.ycor() < -375:
+        #     px = head.xcor()
+        #     nx = -px
+        #     py = head.ycor()
+        #     ny = -py
+        #     head.goto(nx, ny)
 
         if head.distance(prey) < 20:
             if score < 100:
