@@ -54,18 +54,6 @@ while True:
     score_board.hideturtle()
     score_board.write('SCORE: {}'.format(score), align='center', font=('Courier', 25, 'normal'))
 
-    # """büyük yem ayarlıyoruz"""
-    # bigprey = turtle.Turtle()
-    # bigprey.speed(0)
-    # bigprey.color('red')
-    # bigprey.shape('circle')
-    # bigprey.penup()
-    # x = random.randint(-350, 350)
-    # y = random.randint(-350, 350)
-    # if a:
-    #     bigprey.hideturtle()
-    # else:
-    #     bigprey.goto(x, y)
 
     def move():
         """oyuncunun hareketlerini ayarlıyoruz"""
@@ -116,7 +104,6 @@ while True:
     while True:
         simulakra.update()
         if head.xcor() > 750 or head.xcor() < -750 or head.ycor() > 375 or head.ycor() < -375:
-            """bence burada oyunu direkt sonlandırması daha makul"""
             time.sleep(1)
             print("YOUR SCORE: ", score)
             print("GOODBYE")
@@ -180,6 +167,16 @@ while True:
                     print("YOUR SCORE: ", score)
                     print("GOODBYE")
                     exit()
+
+        if head.distance(flat_wall) < 10:
+            print("YOUR SCORE: ", score)
+            print("GOODBYE")
+            exit()
+
+        if head.distance(flat_wall_2) < 10:
+            print("YOUR SCORE: ", score)
+            print("GOODBYE")
+            exit()
 
         move()
         time.sleep(head_speed)
