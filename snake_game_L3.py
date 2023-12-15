@@ -168,15 +168,19 @@ while True:
                     print("GOODBYE")
                     exit()
 
-        if head.distance(flat_wall) < 10:
-            print("YOUR SCORE: ", score)
-            print("GOODBYE")
-            exit()
+        x_distance = -400
+        for x_distance in range(-400, 410, 10):
+            if head.distance(x_distance, 125) < 20:
+                print("YOUR SCORE: ", score)
+                print("GOODBYE")
+                exit()
 
-        if head.distance(flat_wall_2) < 10:
-            print("YOUR SCORE: ", score)
-            print("GOODBYE")
-            exit()
+        x_distance_2 = -400
+        for x_distance_2 in range(-400, 410, 10):
+            if head.distance(x_distance_2, -125) < 20:
+                print("YOUR SCORE: ", score)
+                print("GOODBYE")
+                exit()
 
         move()
         time.sleep(head_speed)
