@@ -179,6 +179,10 @@ while True:
                 print("YOUR SCORE: ", score)
                 print("GOODBYE")
                 exit()
+            if prey.distance(x_distance, 125) < 20:
+                x = random.randint(-350, 350)
+                y = random.randint(-350, 350)
+                prey.goto(x, y)
 
         x_distance_2 = -400
         for x_distance_2 in range(-400, 410, 10):
@@ -187,6 +191,10 @@ while True:
                 print("YOUR SCORE: ", score)
                 print("GOODBYE")
                 exit()
+            if prey.distance(x_distance_2, 125) < 20:
+                x = random.randint(-350, 350)
+                y = random.randint(-350, 350)
+                prey.goto(x, y)
 
         move()
         time.sleep(head_speed)
