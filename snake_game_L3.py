@@ -158,12 +158,16 @@ while True:
         if len(body) > 3:
             anan = body[2:]
             for an in anan:
+                if prey.distance(an) < 20:
+                    x = random.randint(-350, 350)
+                    y = random.randint(-350, 350)
+                    prey.goto(x, y)
                 if head.distance(an) < 1:
                     time.sleep(1)
                     simulakra.clear()
                     simulakra.bgcolor("blue")
                     simulakra.tracer(0)
-                    time.sleep(5)
+                    time.sleep(1)
                     print("YOUR SCORE: ", score)
                     print("GOODBYE")
                     exit()
@@ -171,6 +175,7 @@ while True:
         x_distance = -400
         for x_distance in range(-400, 410, 10):
             if head.distance(x_distance, 125) < 20:
+                time.sleep(1)
                 print("YOUR SCORE: ", score)
                 print("GOODBYE")
                 exit()
@@ -178,6 +183,7 @@ while True:
         x_distance_2 = -400
         for x_distance_2 in range(-400, 410, 10):
             if head.distance(x_distance_2, -125) < 20:
+                time.sleep(1)
                 print("YOUR SCORE: ", score)
                 print("GOODBYE")
                 exit()
