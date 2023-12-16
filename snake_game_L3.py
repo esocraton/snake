@@ -1,3 +1,5 @@
+"""snake game - level 3"""
+
 import turtle
 import time
 import random

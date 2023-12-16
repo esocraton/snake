@@ -1,3 +1,5 @@
+"""snake game - level 2"""
+
 import turtle
 import time
 import random
@@ -135,7 +137,7 @@ while True:
                 y = random.randint(-350, 350)
                 prey.goto(x, y)
 
-            score += 10
+            score += 10 
             score_board.clear()
             score_board.write('SCORE: {}'.format(score), align='center', font=('Courier', 30, 'normal'))
             head_speed = head_speed - 0.0003
@@ -165,7 +167,7 @@ while True:
                     simulakra.clear()
                     simulakra.bgcolor("blue")
                     simulakra.tracer(0)
-                    time.sleep(5)
+                    time.sleep(1)
                     print("YOUR SCORE: ", score)
                     print("GOODBYE")
                     exit()
